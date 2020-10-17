@@ -85,11 +85,9 @@ public class Peliculas extends Fragment{
         view= inflater.inflate(R.layout.fragment_peliculas,container,false);
         con=view.getContext();
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Películas");
-        //sear=(EditText) view.findViewById(R.id.busPeli);
         lista_bus=new ArrayList<>();
         listViewCanales = (GridView)view.findViewById(R.id.listViewPeliculas);
         progressBar = view.findViewById(R.id.progressBarPeli);
-        //progressBar=view.findViewById(R.id.progress_bar);
         setHasOptionsMenu(true);
         Calendar calendar = Calendar.getInstance();
         int dayOfWeek = calendar.get(Calendar.DAY_OF_MONTH);
@@ -117,7 +115,6 @@ public class Peliculas extends Fragment{
             lista_bus=new ArrayList<>();
             lista_canales=listacaheCanales;
             lista_bus=lista_canales;
-            //System.out.println(lista_bus.get(12).getNombre());
             adaptador = new Adaptador_Canales(getContext(),lista_bus);
             listViewCanales.setAdapter(adaptador);
         }
@@ -138,7 +135,6 @@ public class Peliculas extends Fragment{
                         mSwipeRefreshView.setRefreshing(false);
                     }
                 }, 2000);
-                // make your api request here
             }
         });
         listViewCanales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -184,9 +180,6 @@ public class Peliculas extends Fragment{
     public void onPause() {
         super.onPause();
         check=true;
-        /*SharedPreferences.Editor editor = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE).edit();
-        editor.putInt("ordenaPeliculas",0);
-        editor.commit();*/
     }
 
     public void buttonfav(int position){
@@ -325,8 +318,6 @@ public class Peliculas extends Fragment{
             lista_bus.addAll(listacaheCanales);
             lista_canales = listacaheCanales;
             adaptador.notifyDataSetChanged();
-            System.out.println();
-            //System.out.println(lista_bus.get(12).getNombre());
 
         }
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE).edit();
@@ -334,7 +325,6 @@ public class Peliculas extends Fragment{
         editor.commit();
         switch (which) {
             case 0:
-                //((AppCompatActivity) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new Canales()).commit();
                 break;
             case 1:
                 PorNombre(lista_canales);
@@ -355,11 +345,7 @@ public class Peliculas extends Fragment{
             for(int j=0; j<list.size()-i; j++) {
                 if( list.get(j).nombre.compareTo( list.get(j+1).nombre ) > 0 ) {
                     aux.add(list.get(j));
-                    //list.remove(j);
-                    //list.add(j, list.get(j+1));
                     list.set(j, list.get(j+1));
-                    //list.remove(j+1);
-                    //list.add(aux.get(cont));
                     list.set(j+1, aux.get(cont));
                     cont++;
                 }
@@ -368,9 +354,6 @@ public class Peliculas extends Fragment{
         lista_bus.clear();
         lista_bus.addAll(list);
         adaptador.notifyDataSetChanged();
-        //adaptador = new Adaptador_Canales(con,lista_bus);
-        //new MyTask().execute();
-        //listViewCanales.setAdapter(adaptador);
     }
     public void PorAno(ArrayList<CanalOb> list){
         lista_porNombre=new ArrayList<>();
@@ -392,11 +375,7 @@ public class Peliculas extends Fragment{
                 }
                 if( cal1.compareTo( cal2 ) < 0 ) {
                     aux.add(list.get(j));
-                    //list.remove(j);
-                    //list.add(j, list.get(j+1));
                     list.set(j, list.get(j+1));
-                    //list.remove(j+1);
-                    //list.add(aux.get(cont));
                     list.set(j+1, aux.get(cont));
                     cont++;
                 }
@@ -425,11 +404,7 @@ public class Peliculas extends Fragment{
                 }
                 if( cal1.compareTo( cal2 ) < 0 ) {
                     aux.add(list.get(j));
-                    //list.remove(j);
-                    //list.add(j, list.get(j+1));
                     list.set(j, list.get(j+1));
-                    //list.remove(j+1);
-                    //list.add(aux.get(cont));
                     list.set(j+1, aux.get(cont));
                     cont++;
                 }
@@ -454,12 +429,9 @@ public class Peliculas extends Fragment{
 
         @Override
         protected Canales doInBackground(Void... urls) {
-            //progressDialog=ProgressDialog.show(con,"","Iniciando sesion..",true);
             try {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
-                System.out.println(formatter.format(date));
-                //String fullString = urls[0];
                 SharedPreferences preferences = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE);
                 Gson gson = new Gson();
                 String savedList = preferences.getString("listaFavoritos","No existe");
@@ -503,8 +475,6 @@ public class Peliculas extends Fragment{
                         }
                         if (currLine.substring(0, 4).equals("http")) {
                             link = currLine;
-                            //System.out.println(nombre+" "+logo+" "+link);
-                            //publishProgress(da);
                             for(int x=0;x<lista_favoritos.size();x++){
                                 if(nombre.equals(lista_favoritos.get(x).nombre)){
                                     favo=true;
@@ -517,8 +487,6 @@ public class Peliculas extends Fragment{
                             logo="";
                             link="";
                             favo=false;
-                            //lista_canales.add(new CanalOb(name, icon, url1));
-                            //lista_canales.add(new CanalOb(name, icon, url1));
                         }
 
                     }
@@ -564,7 +532,6 @@ public class Peliculas extends Fragment{
                             if(con%2==0) {
                                 if (titulo.replace(" ","").equals(lista_canales.get(x).nombre.replace(" ",""))) {
                                     lista_canales.set(x,new CanalOb(lista_canales.get(x).nombre, lista_canales.get(x).imagen, lista_canales.get(x).link, "", calificacion+"/10", descripcion,lista_canales.get(x).favo,lista_canales.get(x).fecha,lista_canales.get(x).numero,0,""));
-                                    //lista_des.add(new CanalOb(lista_canales.get(x).nombre, lista_canales.get(x).imagen, lista_canales.get(x).link, "", calificacion, descripcion));
                                     titulo="";
                                     calificacion="";
                                     descripcion="";
@@ -577,8 +544,6 @@ public class Peliculas extends Fragment{
                 }
 
                 reader2.close();
-                //adaptador = new Adaptador_Canales(getContext(),lista_canales);
-                //listViewCanales.setAdapter(adaptador);
 
                 return canal;
 
@@ -593,7 +558,6 @@ public class Peliculas extends Fragment{
 
         @Override
         protected void onProgressUpdate(String... values) {
-            //adapter.add(new CanalOb(values[1], values[0], values[2]));
         }
 
         @Override
@@ -613,7 +577,6 @@ public class Peliculas extends Fragment{
             editor.commit();
             lista_bus=lista_canales;
             adaptador = new Adaptador_Canales(con,lista_bus);
-            //new MyTask().execute();
             listViewCanales.setAdapter(adaptador);
             check=true;
         }
