@@ -193,11 +193,7 @@ public class LoginActivity extends AppCompatActivity{
             // y enfocar el primer campo de formulario con un error.
             focusView.requestFocus();
         } else {
-            // Mostrar un hilandero de progreso y iniciar una tarea
-            // en segundo plano para realizar el intento de inicio de sesión de usuario.
-            //progressDialog = ProgressDialog.show(LoginActivity.this,"","Iniciando sesion..",true);
-            new JsonTask().execute("https://pastebin.com/raw/0e7W36ga");
-            //new ConsultarDatos().execute("http://10.0.2.2/SITEUR/Consulta.php?correo="+mEmailView.getText().toString());
+            new JsonTask().execute("Edite con la dirección de la base de datos de usuarios");
         }
     }
 
