@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:checkable="false"
+            android:icon="@drawable/ic_live_tv_black_24dp"
+            android:title="Canales" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:checkable="false"
+            android:icon="@drawable/ic_movie_black_24dp"
+            android:title="Peliculas" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:checkable="false"
+            android:icon="@drawable/ic_local_movies_black_24dp"
+            android:title="Series" />
+        <item
+            android:id="@+id/favoritos"
+            android:checkable="false"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:title="Favoritos" />
+        <item
+            android:id="@+id/nav_manage"
+            android:checkable="false"
+            android:icon="@drawable/ic_cloud_download_black_24dp"
+            android:title="Descargas" />
+    </group>
+
+    <item android:title="Más">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Compartir" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Contacto" />
+            <item
+                android:id="@+id/cerrar"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="Cerrar sesión" />
+        </menu>
+    </item>
+
+</menu>

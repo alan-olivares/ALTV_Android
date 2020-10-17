@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#575656">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:weightSum="4"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/canal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:maxLines="3"
+                android:text="Canal"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progressBarSer"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="3"
+                android:progressTint="#ff0600"
+                android:background="#BDBDBD"
+                android:visibility="gone"></ProgressBar>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <ImageButton
+                android:id="@+id/descaserie"
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/img2"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_file_download_black2_24dp" />
+
+            <ImageButton
+                android:id="@+id/verserie"
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/img2"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_play_arrow_black_24dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

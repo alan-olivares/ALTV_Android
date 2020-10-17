@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "563714578900",
+    "firebase_url": "https://altv-62f5b.firebaseio.com",
+    "project_id": "altv-62f5b",
+    "storage_bucket": "altv-62f5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563714578900:android:aaa621e67effa655",
+        "android_client_info": {
+          "package_name": "com.example.alanolivares.altv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "563714578900-l2n1k5v6dhi59tss7v23f4i6vi9jkimb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alanolivares.altv",
+            "certificate_hash": "a8607bf0683ebeaa5e5903af20b3a0b8e43826d7"
+          }
+        },
+        {
+          "client_id": "563714578900-hdbhjelfmmpb6qf6gg0se53fbp9bbslt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD5gZJ58MDjKArn7E8dxT4W8ftA4Sw8cQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563714578900-hdbhjelfmmpb6qf6gg0se53fbp9bbslt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

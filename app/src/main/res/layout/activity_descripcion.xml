@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/desc"
+    android:background="#575656"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".Descripcion">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imagenPe"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                tools:srcCompat="@drawable/altv" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/infoPel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/negrotrans"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="#FFEB3B"
+                    android:textSize="30sp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+
+
+            <ImageButton
+                android:id="@+id/descarBoton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_below="@+id/imagenPe"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="16dp"
+                android:layout_toStartOf="@+id/playBoton"
+                android:background="@drawable/img2"
+                app:srcCompat="@drawable/ic_file_download_black_24dp" />
+
+            <ImageButton
+                android:id="@+id/playBoton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_below="@+id/imagenPe"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/img2"
+                app:srcCompat="@drawable/ic_play_arrow_black_24dp" />
+
+            <TextView
+                android:id="@+id/txtCalif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imagenPe"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="34dp"
+                android:layout_marginTop="23dp"
+                android:text="TextView"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtdes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtNombre"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="27dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtCalif"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="49dp"
+                android:layout_marginEnd="1dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progressPeli"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_below="@+id/txtCalif"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="33dp"
+                android:layout_marginEnd="60dp"
+                android:background="#BDBDBD"
+                android:progressTint="#ff0600"
+                android:visibility="gone"
+                />
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+</RelativeLayout>
