@@ -117,7 +117,6 @@ public class Descripcion extends AppCompatActivity implements  SwipeRefreshLayou
         }else if(def.contains("=m18")){
             listaopc.add("Resolución 480p");
         }
-        System.out.println(listaopc);
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(Descripcion.this);
         String opc;
@@ -150,11 +149,9 @@ public class Descripcion extends AppCompatActivity implements  SwipeRefreshLayou
                 switch (viewId){
                     case 1:
                         downloadManager=(DownloadManager)Descripcion.this.getSystemService(Descripcion.this.DOWNLOAD_SERVICE);
-                        //downloadManager.addCompletedDownload(lista_bus.get(position).getNombre(),"",true,"")
                         Uri uri =Uri.parse(def2[0]);
                         DownloadManager.Request request =new DownloadManager.Request(uri);
                         request.setTitle(nom);
-                        //request.setDestinationInExternalPublicDir(Environment.getExternalStorageDirectory()+"/ALTV",lista_bus.get(position).getNombre()+".mp4");
                         request.setDestinationInExternalFilesDir(Descripcion.this, Environment.DIRECTORY_MOVIES,nom+".mp4");
                         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                         long reference= downloadManager.enqueue(request);
@@ -200,8 +197,6 @@ public class Descripcion extends AppCompatActivity implements  SwipeRefreshLayou
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println("Hay "+dias+" dias de diferencia en dias3");
-        System.out.println("Hay "+dias2+" dias de diferencia dias4");
         String avisar="";
         if(dias!=0&&dias2<4){
             avisar="¡Nueva!";
@@ -224,8 +219,6 @@ public class Descripcion extends AppCompatActivity implements  SwipeRefreshLayou
                 if(listacaheTiempo.get(x).getNombre().equals(nombre)){
                     tiempo=listacaheTiempo.get(x).getTiempo();
                     tiempoFinal=listacaheTiempo.get(x).tiempoFinal;
-                    //System.out.println(tiempo);
-                    //System.out.println(tiempoFinal);
                 }
             }
         }
@@ -242,7 +235,6 @@ public class Descripcion extends AppCompatActivity implements  SwipeRefreshLayou
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Inflar el menú; Esto agrega elementos a la barra de acción si está presente.
         getMenuInflater().inflate(R.menu.menu_fav, menu);
         MenuItem item = menu.getItem(0);
         if(fav){
@@ -301,7 +293,6 @@ public class Descripcion extends AppCompatActivity implements  SwipeRefreshLayou
                     }
                 }
                 if(ver){
-                    System.out.println(lista_actualizar.get(z));
                     lista_favoritos.add(lista_actualizar.get(z));
                 }
                 String jsonList = gson.toJson(lista_favoritos);
@@ -323,7 +314,6 @@ public class Descripcion extends AppCompatActivity implements  SwipeRefreshLayou
     protected void onResume(){
         super.onResume();
         progress((String) nomb.getText());
-        System.out.println((String) nomb.getText());
     }
 
     @Override
