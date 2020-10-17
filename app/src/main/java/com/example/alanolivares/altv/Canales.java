@@ -398,7 +398,7 @@ public class Canales extends Fragment {
                 da[0]="";
                 da[1]="";
                 da[2]="";
-                URL url3 = new URL("https://pastebin.com/raw/UE6xPb7T");
+                URL url3 = new URL("Direccion web de archivo m3u");
                 BufferedReader reader1 = new BufferedReader(new InputStreamReader(url3.openStream()));
                 String currLine;
                 lista_canales=new ArrayList<>();
