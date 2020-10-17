@@ -28,6 +28,7 @@ Example for your xml guide file in your movies and series:
     <title lang="es">Calificación 8.0</title>
     <desc lang="es"> Con un atuendo tradicional de "hechicero", el mago de la ilusión y de los saltos por cortes (jump cuts), Georges Méliès, dice las palabras mágicas y evoca maravillas partiendo de una simple caja de madera.</desc>
   </programme>
+  
   <programme start="20301216144800 -0300" stop="20311216144800 -0300" channel="El mago (1898)">
     <title lang="es">Calificación 8.0</title>
     <desc lang="es"> Con un atuendo tradicional de "hechicero", el mago de la ilusión y de los saltos por cortes (jump cuts), Georges Méliès, dice las palabras mágicas y evoca maravillas partiendo de una simple caja de madera.</desc>
