@@ -52,7 +52,7 @@ import hb.xvideoplayer.MxVideoPlayerWidget;
 
 
 public class Canales extends Fragment {
-    String url1= "https://pastebin.com/raw/UE6xPb7T";
+    
     private final String EXT_INF = "#EXTINF";
     private final String EXT_LOGO = "tvg-logo";
     private GridView listViewCanales;
@@ -125,7 +125,6 @@ public class Canales extends Fragment {
                         mSwipeRefreshView.setRefreshing(false);
                     }
                 }, 2000);
-                // make your api request here
             }
         });
         //progressBar=view.findViewById(R.id.progress_bar);
@@ -142,8 +141,6 @@ public class Canales extends Fragment {
                             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                         }
-                        //MxVideoPlayerWidget.startFullscreen(getContext(), MxVideoPlayerWidget.class, lista_bus.get(position).getLink(), lista_bus.get(position).getNombre());
-                        //MxVideoPlayerWidget.startFullscreen(view.getContext(), MxVideoPlayerWidget.class, lista_bus.get(position).getLink().replace("m3u8","ts"), lista_bus.get(position).getNombre());
                         Intent pas =new Intent(view.getContext(),ReproducirCanal.class);
                         System.out.println(lista_bus.get(position).getImagen());
                         pas.putExtra("link", lista_bus.get(position).getLink());
@@ -213,30 +210,24 @@ public class Canales extends Fragment {
     }
 
     public Boolean isOnlineNet() {
-
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-
         NetworkInfo actNetInfo = connectivityManager.getActiveNetworkInfo();
-
         return (actNetInfo != null && actNetInfo.isConnected());
     }
+    
     public void buscar(String entrada){
         lista_bus=new ArrayList<>();
         for(int x=0;x<lista_canales.size();x++){
-            if(!lista_canales.get(x).getNombre().toLowerCase().contains(entrada.toLowerCase())){
-                //lista_canales.remove(x);
-                //System.out.println(lista_canales.get(x).getNombre());
-            }
-            else{
+            if(lista_canales.get(x).getNombre().toLowerCase().contains(entrada.toLowerCase())){
                 lista_bus.add(lista_canales.get(x));
                 System.out.println(lista_canales.get(x).getNombre());
             }
         }
         adaptador = new Adaptador_Canales(con,lista_bus);
-        //new MyTask().execute();
         listViewCanales.setAdapter(adaptador);
     }
+    
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_lateral, menu);
         final MenuItem ordenar=menu.findItem(R.id.ordenar);
@@ -245,7 +236,6 @@ public class Canales extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 ordenar();
-
                 return false;
             }
         });
@@ -318,7 +308,6 @@ public class Canales extends Fragment {
         editor.commit();
         switch (which) {
             case 0:
-                //((AppCompatActivity) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new Canales()).commit();
                 break;
             case 1:
                 PorNombre(lista_canales);
@@ -329,9 +318,6 @@ public class Canales extends Fragment {
     public void onPause() {
         super.onPause();
         check=true;
-        /*SharedPreferences.Editor editor = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE).edit();
-        editor.putInt("ordenaPeliculas",0);
-        editor.commit();*/
     }
 
     public void PorNombre(ArrayList<CanalOb> list){
@@ -341,11 +327,7 @@ public class Canales extends Fragment {
             for(int j=0; j<list.size()-i; j++) {
                 if( list.get(j).nombre.compareTo( list.get(j+1).nombre ) > 0 ) {
                     aux.add(list.get(j));
-                    //list.remove(j);
-                    //list.add(j, list.get(j+1));
                     list.set(j, list.get(j+1));
-                    //list.remove(j+1);
-                    //list.add(aux.get(cont));
                     list.set(j+1, aux.get(cont));
                     cont++;
                 }
@@ -354,9 +336,6 @@ public class Canales extends Fragment {
         lista_bus.clear();
         lista_bus.addAll(list);
         adaptador.notifyDataSetChanged();
-        //adaptador = new Adaptador_Canales(con,lista_bus);
-        //new MyTask().execute();
-        //listViewCanales.setAdapter(adaptador);
     }
 
 
@@ -370,12 +349,11 @@ public class Canales extends Fragment {
              progressDialog.setMessage("Cargando Canales");
              progressDialog.show();
              progressDialog.setCanceledOnTouchOutside(false);
-             //adapter=(ArrayAdapter<CanalOb>)listViewCanales.getAdapter();
          }
 
          @Override
          protected Canales doInBackground(Void... urls) {
-             //progressDialog=ProgressDialog.show(con,"","Iniciando sesion..",true);
+             
             try {
                 SharedPreferences preferences = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE);
                 Gson gson = new Gson();
@@ -388,7 +366,6 @@ public class Canales extends Fragment {
                 }else{
                     lista_favoritos=new ArrayList<CanalOb>();
                 }
-                //String fullString = urls[0];
                 String da[]= new String[3];
                 String nombre="";
                 String link="";
@@ -404,7 +381,6 @@ public class Canales extends Fragment {
                 lista_canales=new ArrayList<>();
                 String[] dataArray;
                 while ((currLine = reader1.readLine()) != null) {
-                    //Thread.sleep(15);
                     if(currLine.length()>5){
                         if (currLine.contains(EXT_INF)) {
                             currLine=currLine.replace("#EXTINF:-1","");
@@ -423,15 +399,12 @@ public class Canales extends Fragment {
                         }
                         if (currLine.substring(0, 4).equals("http")) {
                             link = currLine;
-                            //System.out.println(nombre+" "+logo+" "+link);
-                            //publishProgress(da);
                             for(int x=0;x<lista_favoritos.size();x++){
                                 if(nombre.equals(lista_favoritos.get(x).nombre)){
                                     favo=true;
                                 }
                             }
                             lista_canales.add(new CanalOb(nombre, logo, link,"","Sin calificación","No disponible",favo,"",cont,0,""));
-                            //Thread.sleep(15);
                             nombre="";
                             logo="";
                             link="";
@@ -457,7 +430,7 @@ public class Canales extends Fragment {
 
          @Override
          protected void onProgressUpdate(String... values) {
-             //adapter.add(new CanalOb(values[1], values[0], values[2]));
+             
          }
 
          @Override
@@ -476,7 +449,6 @@ public class Canales extends Fragment {
              editor.commit();
              lista_bus=lista_canales;
              adaptador = new Adaptador_Canales(con,lista_bus);
-             //new MyTask().execute();
              listViewCanales.setAdapter(adaptador);
              check=true;
          }
