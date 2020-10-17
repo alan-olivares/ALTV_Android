@@ -134,7 +134,7 @@ public class MenuLateral extends AppCompatActivity
             }
             //progressDialog=ProgressDialog.show(con,"","Iniciando sesion..",true);
             try {
-                URL url3 = new URL("https://pastebin.com/raw/fW270XEh");
+                URL url3 = new URL("Edite con la dirección donde se pueda verificar si la versión esta actualizada");
                 BufferedReader reader1 = new BufferedReader(new InputStreamReader(url3.openStream()));
                 String currLine;
                 while ((currLine = reader1.readLine()) != null) {
