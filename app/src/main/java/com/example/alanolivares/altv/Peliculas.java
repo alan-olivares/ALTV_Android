@@ -484,7 +484,7 @@ public class Peliculas extends Fragment{
                 String logo="";
                 int cont=1;
                 Boolean favo=false;
-                URL url3 = new URL("Direccion web de archivo m3u");
+                URL url3 = new URL("Direccion web de archivo m3u");//here edit your source with your own m3u
                 BufferedReader reader1 = new BufferedReader(new InputStreamReader(url3.openStream()));
                 String currLine;
                 lista_canales=new ArrayList<>();
