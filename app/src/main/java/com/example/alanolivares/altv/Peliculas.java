@@ -484,7 +484,7 @@ public class Peliculas extends Fragment{
                 String logo="";
                 int cont=1;
                 Boolean favo=false;
-                URL url3 = new URL("https://drive.google.com/uc?id=0B4SOhnO9iLFReTZqOGdTbU56bW8&export=download");
+                URL url3 = new URL("Direccion web de archivo m3u");
                 BufferedReader reader1 = new BufferedReader(new InputStreamReader(url3.openStream()));
                 String currLine;
                 lista_canales=new ArrayList<>();
@@ -538,7 +538,7 @@ public class Peliculas extends Fragment{
                 String titulo="";
                 String calificacion="";
                 String descripcion="";
-                URL url4 = new URL("https://goo.gl/UwCTY7?guia.xml");
+                URL url4 = new URL("La informacion de cada pelicula en formato xml debe ir aquí");
                 BufferedReader reader2 = new BufferedReader(new InputStreamReader(url4.openStream()));
                 String currLine2="";
                 int con=0;
