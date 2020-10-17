@@ -96,7 +96,6 @@ public class MenuLateral extends AppCompatActivity
         nombres.setText("Hola: "+nombre);
         version.setText("Versión: "+ver);
         navigationView.setNavigationItemSelectedListener(this);
-        //onNavigationItemSelected(navigationView.getMenu().findItem(R.id.nav_camera));
         if(savedInstanceState==null){
             FragmentManager fM = getSupportFragmentManager();
             fM.beginTransaction().replace(R.id.contenedor,canales).commit();
@@ -132,7 +131,6 @@ public class MenuLateral extends AppCompatActivity
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
-            //progressDialog=ProgressDialog.show(con,"","Iniciando sesion..",true);
             try {
                 URL url3 = new URL("Edite con la dirección donde se pueda verificar si la versión esta actualizada");
                 BufferedReader reader1 = new BufferedReader(new InputStreamReader(url3.openStream()));
@@ -152,11 +150,6 @@ public class MenuLateral extends AppCompatActivity
                         link=dataArray[1];
                     }
                 }
-                System.out.println(mejoras);
-                System.out.println(version);
-                System.out.println(link);
-                //adaptador = new Adaptador_Canales(getContext(),lista_canales);
-                //listViewCanales.setAdapter(adaptador);
                 reader1.close();
                 return currLine;
 
@@ -171,7 +164,6 @@ public class MenuLateral extends AppCompatActivity
 
         @Override
         protected void onProgressUpdate(String... values) {
-            //adapter.add(new CanalOb(values[1], values[0], values[2]));
         }
 
         @Override
@@ -212,19 +204,8 @@ public class MenuLateral extends AppCompatActivity
 
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_lateral, menu);
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
-        return true;
-    }*/
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -237,7 +218,6 @@ public class MenuLateral extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("on resume Menulateral");
         if(isOnlineNet()){
             downloadManager=(DownloadManager)MenuLateral.this.getSystemService(MenuLateral.this.DOWNLOAD_SERVICE);
             Uri uri =Uri.parse("https://www.google.com.mx");
@@ -245,14 +225,12 @@ public class MenuLateral extends AppCompatActivity
             request.setDestinationInExternalFilesDir(MenuLateral.this, Environment.DIRECTORY_MOVIES,"");
             new MyTask().execute();
         }
-        //new MyTask2().execute();
 
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
         SharedPreferences.Editor editor = getSharedPreferences("Usuarios",Context.MODE_PRIVATE).edit();
         if (id == R.id.nav_camera) {
@@ -284,7 +262,7 @@ public class MenuLateral extends AppCompatActivity
             startActivity(sendIntent);
 
         } else if (id == R.id.nav_send) {
-            String[] to = { "aiomskate@hotmail.com"};
+            String[] to = { "your email address"};
             Intent emailIntent = new Intent(Intent.ACTION_SEND);
             emailIntent.setData(Uri.parse("mailto:"));
             emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
