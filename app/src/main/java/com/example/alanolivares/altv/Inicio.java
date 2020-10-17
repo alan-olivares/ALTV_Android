@@ -42,7 +42,7 @@ public class Inicio extends AppCompatActivity {
         String correo = preferences.getString("correo","No existe");
         if(!correo.equals("No existe")){
             if(isOnlineNet()){
-                new JsonTask().execute("https://pastebin.com/raw/0e7W36ga");
+                new JsonTask().execute("Edite con la dirección de la base de datos de usuarios");
             }else{
                 new Handler().postDelayed(new Runnable(){
                     @Override
