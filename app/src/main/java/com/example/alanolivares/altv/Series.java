@@ -418,7 +418,7 @@ public class Series extends Fragment {
                 da[0]="";
                 da[1]="";
                 da[2]="";
-                URL url3 = new URL("https://drive.google.com/uc?id=0B4SOhnO9iLFRT0toM1g3c3VEYVE&export=download");
+                URL url3 = new URL("Direccion web de archivo m3u");
                 BufferedReader reader1 = new BufferedReader(new InputStreamReader(url3.openStream()));
                 String currLine;
                 lista_canales=new ArrayList<>();
@@ -514,7 +514,7 @@ public class Series extends Fragment {
                 String titulo="";
                 String calificacion="";
                 String descripcion="";
-                URL url4 = new URL("https://drive.google.com/uc?id=1me8-xQgxBrmfNtOlb7VdW0kjrZAj7Ve3&export=download");
+                URL url4 = new URL("Los detalles de informacion en formato xml debe de ir aquí");
                 BufferedReader reader2 = new BufferedReader(new InputStreamReader(url4.openStream()));
                 String currLine2="";
                 boolean ch=true;
