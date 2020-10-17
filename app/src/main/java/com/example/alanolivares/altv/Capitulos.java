@@ -86,10 +86,7 @@ public class Capitulos extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(nombre);
         }
-
         ver();
-
-        //Cargar();
         listViewCanales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -138,9 +135,6 @@ public class Capitulos extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println(fechaFinalCap);
-        System.out.println("Hay "+dias+" dias de diferencia en dias3");
-        System.out.println("Hay "+dias2+" dias de diferencia dias4");
         String avisar="";
         if(dias!=0&&dias2<4){
             avisar="¡Nueva!";
@@ -155,11 +149,9 @@ public class Capitulos extends AppCompatActivity {
     public void descargar(int position,String dato){
 
         downloadManager=(DownloadManager)Capitulos.this.getSystemService(Capitulos.this.DOWNLOAD_SERVICE);
-        //downloadManager.addCompletedDownload(lista_bus.get(position).getNombre(),"",true,"")
         Uri uri =Uri.parse(dato);
         DownloadManager.Request request =new DownloadManager.Request(uri);
         request.setTitle(lista_capitulos2.get(position).getNombre()+"-"+lista_capitulos2.get(position).capitulo);
-        //request.setDestinationInExternalPublicDir(Environment.getExternalStorageDirectory()+"/ALTV",lista_capitulos.get(position).getNombre()+".mp4");
         request.setDestinationInExternalFilesDir(Capitulos.this, Environment.DIRECTORY_MOVIES,lista_capitulos2.get(position).getNombre()+"-"+lista_capitulos2.get(position).capitulo+".mp4");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         long reference= downloadManager.enqueue(request);
@@ -168,7 +160,6 @@ public class Capitulos extends AppCompatActivity {
         final String[] def2 = new String[1];
         listaopc=new ArrayList<>();
         final String def=lista_capitulos2.get(position).getLink();
-        System.out.println(def);
         if(def.contains("=m37")){
             listaopc.add("Resolución 1080p");
             listaopc.add("Resolución 720p");
@@ -179,7 +170,6 @@ public class Capitulos extends AppCompatActivity {
         }else if(def.contains("=m18")){
             listaopc.add("Resolución 480p");
         }
-        System.out.println(listaopc);
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(Capitulos.this);
         String opc;
@@ -224,7 +214,6 @@ public class Capitulos extends AppCompatActivity {
 
                         break;
                     default:
-                        //item de la lista
                         break;
                 }
             }
@@ -258,7 +247,6 @@ public class Capitulos extends AppCompatActivity {
             public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
                 Cargar(lista.get(i));
                 tem=lista.get(i);
-                //or this can be also right: selecteditem = level[i];
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView)
@@ -289,7 +277,6 @@ public class Capitulos extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //Inflar el menú; Esto agrega elementos a la barra de acción si está presente.
         getMenuInflater().inflate(R.menu.menu_fav, menu);
         MenuItem item = menu.getItem(0);
         if(fav){
