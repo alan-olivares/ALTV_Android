@@ -91,7 +91,6 @@ public class Favoritos extends Fragment {
 
     }
     public void seleccionar(int position,View view){
-        System.out.println(lista_canales.get(position).capitulo);
         if(!lista_canales.get(position).capitulo.equals("")){
             SharedPreferences preferences = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE);
             String savedList2 = preferences.getString("listaCapitulos","No existe");
@@ -105,7 +104,6 @@ public class Favoritos extends Fragment {
                 }
             }
             Intent pas =new Intent(view.getContext(),Capitulos.class);
-            //System.out.println(lista_canales.get(position).getNombre());
             pas.putParcelableArrayListExtra("capitulos", lista_envia);
             pas.putExtra("serie",lista_canales.get(position).getNombre());
             pas.putExtra("imagen",lista_canales.get(position).getImagen());
@@ -189,7 +187,7 @@ public class Favoritos extends Fragment {
         adaptador.notifyDataSetChanged();
         if(lista_canales.isEmpty()){
             Snackbar
-                    .make(getActivity().findViewById(android.R.id.content), "Lista de favoritos vacia :c",Snackbar.LENGTH_LONG)
+                    .make(getActivity().findViewById(android.R.id.content), "Lista de favoritos vacia",Snackbar.LENGTH_LONG)
                     .show();
         }
     }
