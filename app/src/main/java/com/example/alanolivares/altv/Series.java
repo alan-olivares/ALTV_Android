@@ -74,7 +74,6 @@ public class Series extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Series");
         setHasOptionsMenu(true);
         listViewCanales = (GridView)view.findViewById(R.id.listViewSeries);
-        //progressBar=view.findViewById(R.id.progress_bar);
 
         Calendar calendar = Calendar.getInstance();
         int dayOfWeek = calendar.get(Calendar.DAY_OF_MONTH);
@@ -105,7 +104,6 @@ public class Series extends Fragment {
             lista_bus=listacaheSeries;
             ArrayList<CanalOb> listacaheCapitulos = gson.fromJson(savedList2, type);
             lista_canales=listacaheCapitulos;
-            //System.out.println(lista_bus.get(12).getNombre());
             adaptador = new Adaptador_Canales(getContext(),lista_bus);
             listViewCanales.setAdapter(adaptador);
         }
@@ -137,7 +135,6 @@ public class Series extends Fragment {
                 switch (viewId) {
                     case 0:
                         lista_capitulos2= new ArrayList<>();
-                        //lista_capitulos=getIntent().getParcelableArrayListExtra("capitulos");
                         for(int x=0;x<lista_canales.size();x++){
                             if(lista_canales.get(x).nombre.equals(lista_bus.get(position).nombre)){
                                 lista_capitulos2.add(lista_canales.get(x));
@@ -150,7 +147,6 @@ public class Series extends Fragment {
                             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                         }
                         Intent pas =new Intent(view.getContext(),Capitulos.class);
-                        //System.out.println(lista_canales.get(position).getNombre());
                         pas.putParcelableArrayListExtra("capitulos", lista_capitulos2);
                         pas.putExtra("serie",lista_bus.get(position).getNombre());
                         pas.putExtra("imagen",lista_bus.get(position).getImagen());
@@ -240,17 +236,12 @@ public class Series extends Fragment {
     public void buscar(String entrada){
         lista_bus=new ArrayList<>();
         for(int x=0;x<lista_series.size();x++){
-            if(!lista_series.get(x).getNombre().toLowerCase().contains(entrada.toLowerCase())){
-                //lista_canales.remove(x);
-                //System.out.println(lista_canales.get(x).getNombre());
-            }
-            else{
+            if(lista_series.get(x).getNombre().toLowerCase().contains(entrada.toLowerCase())){
                 lista_bus.add(lista_series.get(x));
                 System.out.println(lista_series.get(x).getNombre());
             }
         }
         adaptador = new Adaptador_Canales(con,lista_bus);
-        //new MyTask().execute();
         listViewCanales.setAdapter(adaptador);
     }
     public Boolean isOnlineNet() {
@@ -328,7 +319,6 @@ public class Series extends Fragment {
         editor.commit();
         switch (which) {
             case 0:
-                //((AppCompatActivity) getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, new Canales()).commit();
                 break;
             case 1:
                 PorCalificacion(lista_series);
@@ -355,11 +345,7 @@ public class Series extends Fragment {
                 }
                 if( cal1.compareTo( cal2 ) < 0 ) {
                     aux.add(list.get(j));
-                    //list.remove(j);
-                    //list.add(j, list.get(j+1));
                     list.set(j, list.get(j+1));
-                    //list.remove(j+1);
-                    //list.add(aux.get(cont));
                     list.set(j+1, aux.get(cont));
                     cont++;
                 }
@@ -384,11 +370,9 @@ public class Series extends Fragment {
 
         @Override
         protected Canales doInBackground(Void... urls) {
-            //progressDialog=ProgressDialog.show(con,"","Iniciando sesion..",true);
             try {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
-                System.out.println(formatter.format(date));
                 SharedPreferences preferences = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE);
                 Gson gson = new Gson();
                 String savedList = preferences.getString("listaFavoritos","No existe");
@@ -409,7 +393,6 @@ public class Series extends Fragment {
                     lista_fecha=new ArrayList<CanalOb>();
                 }
                 Boolean favo=false;
-                //String fullString = urls[0];
                 String da[]= new String[3];
                 String nombre="";
                 String link="";
@@ -441,21 +424,15 @@ public class Series extends Fragment {
                         }
                         if (currLine.substring(0, 4).equals("http")) {
                             link = currLine;
-                            //System.out.println(nombre+" "+logo+" "+link);
-                            //publishProgress(da);
                             lista_canales.add(new CanalOb(nombre, logo, link,cap,"","",false,"",0,0,""));
                             //Thread.sleep(15);
                             nombre="";
                             logo="";
                             link="";
-                            //lista_canales.add(new CanalOb(name, icon, url1));
-                            //lista_canales.add(new CanalOb(name, icon, url1));
                         }
 
                     }
                 }
-                //adaptador = new Adaptador_Canales(getContext(),lista_canales);
-                //listViewCanales.setAdapter(adaptador);
                 reader1.close();
                 Boolean co,sar=false;
                 co=false;
@@ -485,7 +462,6 @@ public class Series extends Fragment {
                                     favo=true;
                                 }
                             }
-                            System.out.println(contar);
                             lista_series.get(lista_series.size()-1).setNumeroCap(contar);
                             lista_series.add(new CanalOb(lista_canales.get(a).nombre,lista_canales.get(a).getImagen(),lista_canales.get(a).getLink(),lista_canales.get(a).capitulo,lista_canales.get(a).calificacion,lista_canales.get(a).descripcion,favo,formatter.format(date),0,contar,""));
                             System.out.println("entra");
@@ -508,7 +484,6 @@ public class Series extends Fragment {
                                 }
                             }
                         }
-                        System.out.println(lista_series.get(x).numeroCap);
                     }
                 }
                 String titulo="";
@@ -539,7 +514,6 @@ public class Series extends Fragment {
                             if(con%2==0) {
                                 if (titulo.replace(" ","").equals(lista_series.get(x).nombre.replace(" ",""))) {
                                     lista_series.set(x,new CanalOb(lista_series.get(x).nombre, lista_series.get(x).imagen, lista_series.get(x).link, lista_series.get(x).capitulo, calificacion+"/10", descripcion,lista_series.get(x).favo,lista_series.get(x).fecha,x+1,lista_series.get(x).numeroCap,lista_series.get(x).fechaCap));
-                                    //lista_des.add(new CanalOb(lista_canales.get(x).nombre, lista_canales.get(x).imagen, lista_canales.get(x).link, "", calificacion, descripcion));
                                     titulo="";
                                     calificacion="";
                                     descripcion="";
@@ -565,7 +539,6 @@ public class Series extends Fragment {
 
         @Override
         protected void onProgressUpdate(String... values) {
-            //adapter.add(new CanalOb(values[1], values[0], values[2]));
         }
 
         @Override
@@ -586,7 +559,6 @@ public class Series extends Fragment {
                 progressDialog.dismiss();
             }
             adaptador = new Adaptador_Canales(con,lista_series);
-            //new MyTask().execute();
             listViewCanales.setAdapter(adaptador);
             check=true;
         }
