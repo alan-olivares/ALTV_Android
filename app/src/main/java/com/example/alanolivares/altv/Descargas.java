@@ -47,23 +47,9 @@ public class Descargas extends Fragment {
         view= inflater.inflate(R.layout.fragment_descargas,container,false);
         listView=view.findViewById(R.id.listviewDescargas);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Descargas");
-       /*path="/storage/emulated/0/Documents";
-        System.out.println(path);
-        ArrayList<String> filenames = new ArrayList<String>();
-        File directory = new File(path);
-        File[] files = directory.listFiles();
-        for (int i = 0; i < files.length; i++)
-        {
-            String file_name = files[i].getName();
-            // you can store name to arraylist and use it later
-            filenames.add(file_name);
-        }*/
-       //path=Environment.DIRECTORY_MOVIES;
-        //check for permission
         lista=new ArrayList<>();
         File directory = new File(Environment.getExternalStorageDirectory()+"/Android/data/com.example.alanolivares.altv/files/Movies");
         System.out.println(directory.toString());
-        //get all the files from a directory
         if (ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED){
@@ -102,7 +88,6 @@ public class Descargas extends Fragment {
 
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            final int pos, long id) {
-                // TODO Auto-generated method stub
                 String[] opc = new String[] { "Eliminar"};
                 AlertDialog opciones = new AlertDialog.Builder(
                         getContext())
@@ -119,8 +104,6 @@ public class Descargas extends Fragment {
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
-                                            //adapter= new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,lista);
-                                            //listView.setAdapter(adapter);
                                             adapter.notifyDataSetChanged();
                                             if(lista.isEmpty()){
                                                 Snackbar
