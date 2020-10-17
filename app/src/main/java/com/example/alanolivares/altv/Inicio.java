@@ -47,7 +47,6 @@ public class Inicio extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable(){
                     @Override
                     public void run() {
-                        /* Create an Intent that will start the Menu-Activity. */
                         Intent mainIntent = new Intent(Inicio.this,MenuLateral.class);
                         Inicio.this.startActivity(mainIntent);
                         Inicio.this.finish();
@@ -59,7 +58,6 @@ public class Inicio extends AppCompatActivity {
             new Handler().postDelayed(new Runnable(){
                 @Override
                 public void run() {
-                    /* Create an Intent that will start the Menu-Activity. */
                     Intent mainIntent = new Intent(Inicio.this,LoginActivity.class);
                     Inicio.this.startActivity(mainIntent);
                     Inicio.this.finish();
@@ -137,8 +135,6 @@ public class Inicio extends AppCompatActivity {
                 boolean a=false;
                 for (int i=0; i<jsonArray.length(); i++){
                     JSONObject jsonObject= jsonArray.getJSONObject(i);
-                    System.out.println(jsonObject.getString("usuario"));
-                    System.out.println(jsonObject.getString("password"));
                     if((jsonObject.getString("usuario").equals(correo)&&jsonObject.getString("password").equals(contra))){
                         SharedPreferences.Editor editor = getSharedPreferences("Usuarios",MODE_PRIVATE).edit();
                         editor.putString("correo",correo);
@@ -146,10 +142,6 @@ public class Inicio extends AppCompatActivity {
                         editor.putString("contra",contra);
                         editor.commit();
                         nombre=jsonObject.getString("name");
-                        System.out.println(jsonObject.getString("usuario"));
-                        System.out.println(jsonObject.getString("password"));
-                        System.out.println(correo);
-                        System.out.println(contra);
                         a=true;
                         final String finalNombre = nombre;
                         new Handler().postDelayed(new Runnable(){
@@ -176,12 +168,6 @@ public class Inicio extends AppCompatActivity {
                     Inicio.this.startActivity(mainIntent);
                     Inicio.this.finish();
                 }
-                    /*listViewContactos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-                });*/
             } catch (JSONException e) {
                 e.printStackTrace();
             }
