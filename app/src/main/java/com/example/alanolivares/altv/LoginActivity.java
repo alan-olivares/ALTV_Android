@@ -3,6 +3,7 @@ package com.example.alanolivares.altv;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,15 +12,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -39,6 +31,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.alanolivares.altv.Funciones.Funciones;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,7 +58,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -72,9 +69,6 @@ public class LoginActivity extends AppCompatActivity{
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -82,9 +76,8 @@ public class LoginActivity extends AppCompatActivity{
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
-    private View mLoginFormView;
     Boolean as=true;
-    Button boton,reg;
+    Button reg;
 
 
     @Override
@@ -107,6 +100,8 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
 
+
+
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -118,44 +113,14 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         reg = (Button) findViewById(R.id.registro);
         reg.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert=new AlertDialog.Builder(LoginActivity.this);
-                alert.setMessage("Por favor mandame un correo mencionandome donde conseguite tu ALTV para registrarte una cuenta");
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String[] to = { "aiomskate@hotmail.com"};
-                        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                        emailIntent.setData(Uri.parse("mailto:"));
-                        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
-                        emailIntent.putExtra(Intent.EXTRA_SUBJECT,"");
-                        emailIntent.setType("message/rfc822");
-                        startActivity(Intent.createChooser(emailIntent, "Email "));
-                    }
-                }).setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                AlertDialog aler=alert.create();
-                aler.show();
+                new Funciones(LoginActivity.this).openWhatsApp("Hola Alan, estoy interesado en una cuenta para la aplicación de ALTV");
             }
         });
-    }
-    public Boolean isOnlineNet() {
-
-        ConnectivityManager connectivityManager = (ConnectivityManager)
-                this.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo actNetInfo = connectivityManager.getActiveNetworkInfo();
-
-        return (actNetInfo != null && actNetInfo.isConnected());
     }
 
 
@@ -217,7 +182,7 @@ public class LoginActivity extends AppCompatActivity{
         protected void onPreExecute() {
             super.onPreExecute();
             pd=new ProgressDialog(LoginActivity.this);
-            pd.setMessage("Iniciando sessión");
+            pd.setMessage("Iniciando sesión");
             pd.setCancelable(false);
             pd.show();
         }
@@ -274,27 +239,22 @@ public class LoginActivity extends AppCompatActivity{
                 boolean a=false;
                 for (int i=0; i<jsonArray.length(); i++){
                     JSONObject jsonObject= jsonArray.getJSONObject(i);
-                    System.out.println(jsonObject.getString("usuario"));
-                    System.out.println(jsonObject.getString("password"));
                     if((jsonObject.getString("usuario").equals(correo)&&jsonObject.getString("password").equals(contra))){
                         SharedPreferences.Editor editor = getSharedPreferences("Usuarios",MODE_PRIVATE).edit();
                         editor.putString("correo",correo);
                         editor.putString("contra",contra);
                         editor.putString("nombre",jsonObject.getString("name"));
+                        editor.putString("venc",jsonObject.getString("venc"));
                         editor.commit();
-                        System.out.println(jsonObject.getString("usuario"));
-                        System.out.println(jsonObject.getString("password"));
-                        System.out.println(correo);
-                        System.out.println(contra);
                         a=true;
                         Toast.makeText(getApplicationContext(), "Inicio de sesión satisfactorio", Toast.LENGTH_SHORT).show();
-                        Intent re = new Intent(LoginActivity.this, MenuLateral.class);
+                        Intent re = new Intent(LoginActivity.this, BottomNavigation.class);
                         startActivity(re);
                     }
                 }
                 if(a==false) {
                     Snackbar
-                            .make(findViewById(R.id.root_layout), "Correo o contraseña incorrecta",Snackbar.LENGTH_LONG)
+                            .make(findViewById(R.id.root_layout), "Correo o contraseña incorrecta", Snackbar.LENGTH_LONG)
                             .show();
                 }
                     /*listViewContactos.setOnItemClickListener(new AdapterView.OnItemClickListener() {

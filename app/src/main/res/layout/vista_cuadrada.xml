@@ -6,7 +6,7 @@
         android:id="@+id/imagen"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="#575656"
+        android:background="@drawable/gradiant"
         android:transitionName="imagen_compartida" />
 
 

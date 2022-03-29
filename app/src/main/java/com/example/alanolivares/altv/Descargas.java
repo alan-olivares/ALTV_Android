@@ -9,12 +9,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +20,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,19 +47,7 @@ public class Descargas extends Fragment {
         view= inflater.inflate(R.layout.fragment_descargas,container,false);
         listView=view.findViewById(R.id.listviewDescargas);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Descargas");
-       /*path="/storage/emulated/0/Documents";
-        System.out.println(path);
-        ArrayList<String> filenames = new ArrayList<String>();
-        File directory = new File(path);
-        File[] files = directory.listFiles();
-        for (int i = 0; i < files.length; i++)
-        {
-            String file_name = files[i].getName();
-            // you can store name to arraylist and use it later
-            filenames.add(file_name);
-        }*/
-       //path=Environment.DIRECTORY_MOVIES;
-        //check for permission
+
         lista=new ArrayList<>();
         File directory = new File(Environment.getExternalStorageDirectory()+"/Android/data/com.example.alanolivares.altv/files/Movies");
         System.out.println(directory.toString());
@@ -75,14 +63,11 @@ public class Descargas extends Fragment {
                     }
                 }
             }else{
-                Snackbar
-                        .make(getActivity().findViewById(android.R.id.content), "Lista de descargas vacia",Snackbar.LENGTH_LONG)
-                        .show();
+
+                Toast.makeText(getContext(), "Lista de descargas vacia :c", Toast.LENGTH_SHORT).show();
             }
         }else{
-            Snackbar
-                    .make(getActivity().findViewById(android.R.id.content), "Se necesitan permisos para poder ver las descargas",Snackbar.LENGTH_LONG)
-                    .show();
+            Toast.makeText(getContext(), "Se necesitan permisos para poder ver las descargas", Toast.LENGTH_LONG).show();
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
         Collections.sort(lista);
@@ -119,13 +104,9 @@ public class Descargas extends Fragment {
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
-                                            //adapter= new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,lista);
-                                            //listView.setAdapter(adapter);
                                             adapter.notifyDataSetChanged();
                                             if(lista.isEmpty()){
-                                                Snackbar
-                                                        .make(getActivity().findViewById(android.R.id.content), "Lista de descargas vacia",Snackbar.LENGTH_LONG)
-                                                        .show();
+                                                Toast.makeText(getContext(), "Lista de descargas vacia :c", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/canales"
+        android:checkable="false"
+        android:icon="@drawable/ic_live_tv_black_24dp"
+        android:title="Canales" />
+    <item
+        android:id="@+id/peliculas"
+        android:checkable="false"
+        android:icon="@drawable/ic_movie_black_24dp"
+        android:title="Peliculas" />
+    <item
+        android:id="@+id/series"
+        android:checkable="false"
+        android:icon="@drawable/ic_local_movies_black_24dp"
+        android:title="Series" />
+    <item
+        android:id="@+id/favoritos2"
+        android:checkable="false"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="Favoritos" />
+    <item
+        android:id="@+id/descargas"
+        android:checkable="false"
+        android:icon="@drawable/ic_cloud_download_black_24dp"
+        android:title="Descargas" />
+
+</menu>

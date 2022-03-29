@@ -7,19 +7,19 @@
     android:orientation="horizontal"
     tools:context=".ReproducirVideo">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:background="@color/negrotrans">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarVideo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/negrotrans" />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.example.alanolivares.altv.FullScreenVideoView
         android:id="@+id/video2"

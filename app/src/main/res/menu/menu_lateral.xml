@@ -13,5 +13,4 @@
         android:icon="@drawable/ic_sort_by_alpha_black_24dp"
         app:showAsAction="always"
         />
-
 </menu>

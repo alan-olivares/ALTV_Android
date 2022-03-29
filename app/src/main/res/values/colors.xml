@@ -7,4 +7,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#8A0829</color>
     <color name="negrotrans">#80000000</color>
+    <color name="black">#000000</color>
+    <color name="gris_obscuro">#2f2f2f</color>
+    <color name="gris_fondo">#f3f3f4</color>
+
 </resources>

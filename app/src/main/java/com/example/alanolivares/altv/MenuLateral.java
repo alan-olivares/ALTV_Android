@@ -1,4 +1,5 @@
 package com.example.alanolivares.altv;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -16,14 +17,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,6 +24,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.alanolivares.altv.Funciones.CanalOb;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -46,8 +48,6 @@ import java.util.Date;
 public class MenuLateral extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Canales canales = new Canales();
-    private final String EXT_INF = "#EXTINF";
-    private final String EXT_LOGO = "tvg-logo";
     Peliculas peliculas = new Peliculas();
     Series series = new Series();
     Descargas descargas=new Descargas();
@@ -111,7 +111,7 @@ public class MenuLateral extends AppCompatActivity
         return (actNetInfo != null && actNetInfo.isConnected());
     }
 
-    private class MyTask extends AsyncTask<Void, String, String> {
+     private class MyTask extends AsyncTask<Void, String, String> {
         String version="";
         String mejoras="";
         Boolean comp=false;

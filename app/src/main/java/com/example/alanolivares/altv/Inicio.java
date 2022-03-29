@@ -8,14 +8,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.alanolivares.altv.Funciones.Funciones;
+import com.example.alanolivares.altv.Funciones.TiempoOb;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,21 +30,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Inicio extends AppCompatActivity {
-    ProgressBar inicio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
-        inicio=findViewById(R.id.progressBarInicio);
-        inicio.setVisibility(View.VISIBLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         SharedPreferences preferences = getSharedPreferences("Usuarios",MODE_PRIVATE);
         String correo = preferences.getString("correo","No existe");
+        updateVersion(preferences,this);//Eliminar despues de la siguiente actualización
         if(!correo.equals("No existe")){
             if(isOnlineNet()){
                 new JsonTask().execute("https://pastebin.com/raw/0e7W36ga");
@@ -48,10 +54,9 @@ public class Inicio extends AppCompatActivity {
                     @Override
                     public void run() {
                         /* Create an Intent that will start the Menu-Activity. */
-                        Intent mainIntent = new Intent(Inicio.this,MenuLateral.class);
+                        Intent mainIntent = new Intent(Inicio.this,BottomNavigation.class);
                         Inicio.this.startActivity(mainIntent);
                         Inicio.this.finish();
-                        inicio.setVisibility(View.INVISIBLE);
                     }
                 }, 1000);
             }
@@ -63,7 +68,6 @@ public class Inicio extends AppCompatActivity {
                     Intent mainIntent = new Intent(Inicio.this,LoginActivity.class);
                     Inicio.this.startActivity(mainIntent);
                     Inicio.this.finish();
-                    inicio.setVisibility(View.INVISIBLE);
                 }
             }, 1000);
         }
@@ -77,6 +81,22 @@ public class Inicio extends AppCompatActivity {
         NetworkInfo actNetInfo = connectivityManager.getActiveNetworkInfo();
 
         return (actNetInfo != null && actNetInfo.isConnected());
+    }
+
+    private void updateVersion(SharedPreferences preferences,Context context){//Veriones de los avances que tenia en cada elemento
+        String listaV2 = preferences.getString("listaTiempo_v2","No existe");
+        String lista = preferences.getString("listaTiempo","No existe");
+        Gson gson = new Gson();
+        if(listaV2.equals("No existe") && !lista.equals("No existe")){
+            Funciones func=new Funciones(context);
+            HashMap<String,TiempoOb> listaNueva = new HashMap<>();
+            Type type = new TypeToken<ArrayList<TiempoOb>>(){}.getType();
+            ArrayList<TiempoOb> listacaheTiempo = gson.fromJson(lista, type);
+            for(int x=0;x<listacaheTiempo.size();x++){
+                listaNueva.put(listacaheTiempo.get(x).getNombre(),listacaheTiempo.get(x));
+            }
+            func.saveHash(listaNueva,"listaTiempo_v2");
+        }
     }
 
 
@@ -137,28 +157,22 @@ public class Inicio extends AppCompatActivity {
                 boolean a=false;
                 for (int i=0; i<jsonArray.length(); i++){
                     JSONObject jsonObject= jsonArray.getJSONObject(i);
-                    System.out.println(jsonObject.getString("usuario"));
-                    System.out.println(jsonObject.getString("password"));
                     if((jsonObject.getString("usuario").equals(correo)&&jsonObject.getString("password").equals(contra))){
                         SharedPreferences.Editor editor = getSharedPreferences("Usuarios",MODE_PRIVATE).edit();
                         editor.putString("correo",correo);
                         editor.putString("nombre",jsonObject.getString("name"));
                         editor.putString("contra",contra);
+                        editor.putString("venc",jsonObject.getString("venc"));
                         editor.commit();
                         nombre=jsonObject.getString("name");
-                        System.out.println(jsonObject.getString("usuario"));
-                        System.out.println(jsonObject.getString("password"));
-                        System.out.println(correo);
-                        System.out.println(contra);
                         a=true;
                         final String finalNombre = nombre;
                         new Handler().postDelayed(new Runnable(){
                             @Override
                             public void run() {
-                                inicio.setVisibility(View.INVISIBLE);
                                 /* Create an Intent that will start the Menu-Activity. */
                                 Toast.makeText(getApplicationContext(), "Bienvenido de nuevo: "+ finalNombre, Toast.LENGTH_SHORT).show();
-                                Intent mainIntent = new Intent(Inicio.this,MenuLateral.class);
+                                Intent mainIntent = new Intent(Inicio.this,BottomNavigation.class);
                                 Inicio.this.startActivity(mainIntent);
                                 Inicio.this.finish();
                             }

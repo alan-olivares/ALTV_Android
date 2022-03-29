@@ -1,11 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">#000000</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="dialog_light" parent="@android:style/Theme.Dialog">
+
     </style>
 
     <style name="AppTheme.ActionTrans" parent="Theme.AppCompat.Light">
@@ -13,14 +17,28 @@
         <item name="windowActionBarOverlay">true</item>
     </style>
 
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#610B0B</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="windowActionBarOverlay">true</item>
+        <item name="colorPrimary">#610B0B</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.NoActionBar2">
+        <item name="colorPrimary">#000000</item>
+        <item name="colorPrimaryDark">#000000</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
     <style name="MyTheme"  parent="">
-        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimary">#000000</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
@@ -29,5 +47,30 @@
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="myRecyclerViewStyle">
+        <!-- NOTE: clipChildren should be true on API level 10 -->
+        <item name="android:clipChildren">true</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:paddingBottom">@dimen/activity_vertical_margin</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/activity_vertical_margin</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:scrollbars">vertical</item>
+    </style>
+
+
+    <style name="TextAppearance.CustomCastIntroOverlay.Button"
+        parent="android:style/TextAppearance">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="TextAppearance.CustomCastIntroOverlay.Title"
+        parent="android:style/TextAppearance.Large">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
 
 </resources>

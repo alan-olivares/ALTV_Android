@@ -22,6 +22,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
+            android:indeterminateTint="@color/colorAccent"
             android:indeterminate="true"/>
     </com.google.android.exoplayer2.ui.PlayerView>
 

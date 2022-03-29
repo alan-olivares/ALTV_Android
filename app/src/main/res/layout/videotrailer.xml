@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#000000"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/exitbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="#000000"
+        android:src="@drawable/ic_close_black_24dp"
+        android:text="Button" />
+
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:id="@+id/youtube"
+        class="com.google.android.youtube.player.YouTubePlayerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

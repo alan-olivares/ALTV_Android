@@ -5,4 +5,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="dialog_light" parent="@android:style/Theme.Material.Light.Dialog.NoActionBar">
+    </style>
 </resources>

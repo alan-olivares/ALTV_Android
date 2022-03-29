@@ -14,11 +14,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
-import android.provider.Settings;
-import android.support.annotation.RequiresApi;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,17 +23,21 @@ import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.MediaController;
-import android.widget.ProgressBar;
-import android.support.v7.widget.Toolbar;
 import android.widget.VideoView;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.example.alanolivares.altv.Funciones.TiempoOb;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class ReproducirVideo extends AppCompatActivity  {
+public class ReproducirVideo extends AppCompatActivity {
     VideoView videoView;
     public Handler handler = new Handler();
     private static ProgressDialog progressDialog;
@@ -122,6 +121,7 @@ public class ReproducirVideo extends AppCompatActivity  {
             @Override
             public void onPrepared(final MediaPlayer mp) {
                 mp.setLooping(true);
+                mp.setVolume(0, 0);
                 mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
                     @Override
                     public void onVideoSizeChanged(final MediaPlayer mp, int arg1,
@@ -212,7 +212,6 @@ public class ReproducirVideo extends AppCompatActivity  {
     protected void onPause(){
         super.onPause();
         a=videoView.getCurrentPosition();
-        System.out.println("-------------------------"+a);
         if(a!=0) {
             Gson gson = new Gson();
             for (int x = 0; x < lista.size(); x++) {
@@ -223,8 +222,6 @@ public class ReproducirVideo extends AppCompatActivity  {
                     editor.putString("listaTiempo", jsonList);
                     editor.commit();
                 }
-                System.out.println(lista.get(x).getNombre());
-                System.out.println(lista.get(x).getTiempo());
             }
         }
     }
@@ -238,8 +235,8 @@ public class ReproducirVideo extends AppCompatActivity  {
         Type type = new TypeToken<ArrayList<TiempoOb>>(){}.getType();
         ArrayList<TiempoOb> listacaheTiempo = gson.fromJson(savedList, type);
         for(int x=0;x<listacaheTiempo.size();x++)
-            if(listacaheTiempo.get(x).nombre.equals(nombre.toString()))
-                tim=listacaheTiempo.get(x).tiempo;
+            if(listacaheTiempo.get(x).getNombre().equals(nombre.toString()))
+                tim=listacaheTiempo.get(x).getTiempo();
         progressDialog.setTitle("Por favor espera");
         progressDialog.setMessage("Cargando buffering");
         progressDialog.show();
@@ -260,31 +257,3 @@ public class ReproducirVideo extends AppCompatActivity  {
 
 
 }
-class TiempoOb {
-    String nombre;
-    int tiempo;
-    int tiempoFinal;
-
-    public TiempoOb(String nombre, int tiempo,int tiempoFinal) {
-        this.nombre = nombre;
-        this.tiempo = tiempo;
-        this.tiempoFinal = tiempoFinal;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getTiempo() {
-        return tiempo;
-    }
-
-    public void setTiempo(int tiempo) {
-        this.tiempo = tiempo;
-    }
-}
-

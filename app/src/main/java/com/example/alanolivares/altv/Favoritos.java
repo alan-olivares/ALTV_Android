@@ -3,18 +3,22 @@ package com.example.alanolivares.altv;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import com.example.alanolivares.altv.Funciones.CanalOb;
+import com.example.alanolivares.altv.Funciones.Funciones;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -25,172 +29,119 @@ import java.util.concurrent.TimeUnit;
 
 public class Favoritos extends Fragment {
     private GridView listViewCanales;
+    private ArrayList<CanalOb> lista_canales,lista_capi,lista_actualizar;
+    private Funciones func;
     private Adaptador_Canales adaptador;
-    ArrayList<CanalOb> lista_canales,lista_envia,lista_actualizar,lista_capi;
-    SearchView sear;
-    final Gson gson = new Gson();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view;
         view=inflater.inflate(R.layout.fragment_favoritos, container, false);
         listViewCanales = (GridView)view.findViewById(R.id.listViewFavoritos);
-
+        int cant=(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT)?3:6;
+        listViewCanales.setNumColumns(cant);
+        func=new Funciones(getContext());
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Favoritos");
-        SharedPreferences preferences = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE);
-        String savedList = preferences.getString("listaFavoritos","No existe");
-        lista_canales=new ArrayList<>();
-        if(!savedList.equals("No existe")){
-            Type type = new TypeToken<ArrayList<CanalOb>>(){}.getType();
-            ArrayList<CanalOb> listacaheCanales = gson.fromJson(savedList, type);
-            lista_canales=listacaheCanales;
-            adaptador = new Adaptador_Canales(getContext(),lista_canales);
-            listViewCanales.setAdapter(adaptador);
-        }
-        if(lista_canales.isEmpty()){
-            Snackbar
-                    .make(getActivity().findViewById(android.R.id.content), "Lista de favoritos vacia :c",Snackbar.LENGTH_LONG)
-                    .show();
-        }
         listViewCanales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int viewId = (int) id;
                 switch (viewId) {
                     case 0:
-                        seleccionar(position,view);
+                        seleccionar(position);
                         break;
                     case 1:
                         quitar(position);
+                        adaptador.notifyDataSetChanged();
                         break;
                 }
             }
         });
-
-
         return view;
     }
     @Override
     public void onResume(){
         super.onResume();
-        Gson gson = new Gson();
-        SharedPreferences preferences = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE);
-        String savedList = preferences.getString("listaFavoritos","No existe");
-        Type type = new TypeToken<ArrayList<CanalOb>>(){}.getType();
-        if(!savedList.equals("No existe")) {
-            ArrayList<CanalOb> listacaheCanales = gson.fromJson(savedList, type);
-            lista_canales.clear();
-            lista_canales.addAll(listacaheCanales);
-            adaptador.notifyDataSetChanged();
-            if (lista_canales.isEmpty()) {
-                Snackbar
-                        .make(getActivity().findViewById(android.R.id.content), "Lista de favoritos vacia :c", Snackbar.LENGTH_LONG)
-                        .show();
-            }
-        }
-
+        getFavs();
     }
-    public void seleccionar(int position,View view){
-        System.out.println(lista_canales.get(position).capitulo);
-        if(!lista_canales.get(position).capitulo.equals("")){
-            SharedPreferences preferences = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE);
-            String savedList2 = preferences.getString("listaCapitulos","No existe");
-            Type type = new TypeToken<ArrayList<CanalOb>>(){}.getType();
-            ArrayList<CanalOb> listacaheCapitulos = gson.fromJson(savedList2, type);
-            lista_capi=listacaheCapitulos;
-            lista_envia=new ArrayList<>();
+    private void getFavs(){
+        lista_canales=func.listaObjeto("listaFavoritos");
+        if (lista_canales.isEmpty()) {
+            Toast.makeText(getContext(), "Lista de favoritos vacia :c", Toast.LENGTH_SHORT).show();
+        }
+        adaptador = new Adaptador_Canales(getContext(),lista_canales);
+        listViewCanales.setAdapter(adaptador);
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        View c = listViewCanales.getChildAt(0);
+        if(c!=null){
+            final int scrolly = (-c.getTop() + listViewCanales.getFirstVisiblePosition() * c.getHeight())/(180*3);
+            listViewCanales.post(new Runnable() {
+                @Override
+                public void run() {
+                    listViewCanales.setSelection(scrolly);
+                }
+            });
+        }
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            listViewCanales.setNumColumns(6);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            listViewCanales.setNumColumns(3);
+        }
+    }
+    public void seleccionar(int position){
+        Intent pas;
+        if(!lista_canales.get(position).getCapitulo().equals("")){
+            lista_capi=func.listaObjeto("listaCapitulos");
+            ArrayList<CanalOb> lista_envia=new ArrayList<>();
             for(int x=0;x<lista_capi.size();x++){
-                if(lista_canales.get(position).nombre.equals(lista_capi.get(x).nombre)){
+                if(lista_canales.get(position).getNombre().equals(lista_capi.get(x).getNombre())){
                     lista_envia.add(lista_capi.get(x));
                 }
             }
-            Intent pas =new Intent(view.getContext(),Capitulos.class);
-            //System.out.println(lista_canales.get(position).getNombre());
+            pas =new Intent(getContext(),Capitulos.class);
             pas.putParcelableArrayListExtra("capitulos", lista_envia);
-            pas.putExtra("serie",lista_canales.get(position).getNombre());
-            pas.putExtra("imagen",lista_canales.get(position).getImagen());
-            pas.putExtra("cal",lista_canales.get(position).calificacion);
-            pas.putExtra("des",lista_canales.get(position).descripcion);
-            pas.putExtra("fav",lista_canales.get(position).favo);
-            pas.putExtra("fecha",lista_canales.get(position).fecha);
-            pas.putExtra("fechaCap",lista_canales.get(position).fechaCap);
-            startActivity(pas);
-        }else if(lista_canales.get(position).capitulo.equals("")&&lista_canales.get(position).link.contains("googleusercontent")){
-            Intent pas =new Intent(view.getContext(),Descripcion.class);
-            pas.putExtra("nom",lista_canales.get(position).getNombre());
-            pas.putExtra("link", lista_canales.get(position).getLink());
-            pas.putExtra("cal",lista_canales.get(position).calificacion);
-            pas.putExtra("des",lista_canales.get(position).descripcion);
-            pas.putExtra("fav",lista_canales.get(position).favo);
-            pas.putExtra("ima",lista_canales.get(position).getImagen());
-            pas.putExtra("fecha",lista_canales.get(position).fecha);
-            startActivity(pas);
-        }else if(!lista_canales.get(position).link.contains("googleusercontent")){
-            Intent pas =new Intent(view.getContext(),ReproducirCanal.class);
+            pas.putExtra("objeto",lista_canales.get(position));
+        }else if(lista_canales.get(position).getCapitulo().equals("")&&lista_canales.get(position).getLink().contains("googleusercontent")){
+            pas =new Intent(getContext(),Descripcion.class);
+            pas.putExtra("objeto",lista_canales.get(position));
+        }else{
+            pas =new Intent(getContext(),ReproducirCanal.class);
             pas.putExtra("link", lista_canales.get(position).getLink());
             pas.putExtra("nombre", lista_canales.get(position).getNombre());
-            startActivity(pas);
+        }
+        startActivity(pas);
+    }
+
+    private void quitaFav( int position){
+        for(int x=0;x<lista_actualizar.size();x++){
+            if(lista_actualizar.get(x).getNombre().equals(lista_canales.get(position).getNombre())){
+                lista_actualizar.get(x).setFavo(false);
+                return;
+            }
         }
     }
     public void quitar(int position){
-        lista_actualizar=new ArrayList<>();
-        if(!lista_canales.get(position).capitulo.equals("")){
-            SharedPreferences preferences = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE);
-            String savedList2 = preferences.getString("listaSeries","No existe");
-            Type type = new TypeToken<ArrayList<CanalOb>>(){}.getType();
-            ArrayList<CanalOb> listacaheSeries = gson.fromJson(savedList2, type);
-            lista_actualizar=listacaheSeries;
-            for(int x=0;x<lista_actualizar.size();x++){
-                if(lista_actualizar.get(x).nombre.equals(lista_canales.get(position).nombre)){
-                    lista_actualizar.get(x).setFavo(false);
-                }
-            }
-            String jsonList2 = gson.toJson(lista_actualizar);
-            SharedPreferences.Editor editor = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE).edit();
-            editor.putString("listaSeries",jsonList2);
-            editor.commit();
-        }else if(lista_canales.get(position).capitulo.equals("")&&lista_canales.get(position).link.contains("googleusercontent")){
-            SharedPreferences preferences = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE);
-            String savedList2 = preferences.getString("listaPeliculas","No existe");
-            Type type = new TypeToken<ArrayList<CanalOb>>(){}.getType();
-            ArrayList<CanalOb> listacaheSeries = gson.fromJson(savedList2, type);
-            lista_actualizar=listacaheSeries;
-            for(int x=0;x<lista_actualizar.size();x++){
-                if(lista_actualizar.get(x).nombre.equals(lista_canales.get(position).nombre)){
-                    lista_actualizar.get(x).setFavo(false);
-                }
-            }
-            String jsonList2 = gson.toJson(lista_actualizar);
-            SharedPreferences.Editor editor = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE).edit();
-            editor.putString("listaPeliculas",jsonList2);
-            editor.commit();
-        }else if(!lista_canales.get(position).link.contains("googleusercontent")){
-            SharedPreferences preferences = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE);
-            String savedList2 = preferences.getString("listaCanales","No existe");
-            Type type = new TypeToken<ArrayList<CanalOb>>(){}.getType();
-            ArrayList<CanalOb> listacaheSeries = gson.fromJson(savedList2, type);
-            lista_actualizar=listacaheSeries;
-            for(int x=0;x<lista_actualizar.size();x++){
-                if(lista_actualizar.get(x).nombre.equals(lista_canales.get(position).nombre)){
-                    lista_actualizar.get(x).setFavo(false);
-                }
-            }
-            String jsonList2 = gson.toJson(lista_actualizar);
-            SharedPreferences.Editor editor = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE).edit();
-            editor.putString("listaCanales",jsonList2);
-            editor.commit();
+        if(!lista_canales.get(position).getCapitulo().equals("")){
+            lista_actualizar=func.listaObjeto("listaSeries");
+            quitaFav(position);
+            func.saveLista(lista_actualizar,"listaSeries");
+        }else if(lista_canales.get(position).getCapitulo().equals("")&&lista_canales.get(position).getLink().contains("googleusercontent")){
+            lista_actualizar=func.listaObjeto("listaPeliculas");
+            quitaFav(position);
+            func.saveLista(lista_actualizar,"listaPeliculas");
+        }else if(!lista_canales.get(position).getLink().contains("googleusercontent")){
+            lista_actualizar=func.listaObjeto("listaCanales");
+            quitaFav(position);
+            func.saveLista(lista_actualizar,"listaCanales");
         }
-        lista_canales.get(position).setFavo(false);
         lista_canales.remove(position);
-        String jsonList2 = gson.toJson(lista_canales);
-        SharedPreferences.Editor editor2 = getActivity().getSharedPreferences("Usuarios",Context.MODE_PRIVATE).edit();
-        editor2.putString("listaFavoritos",jsonList2);
-        editor2.commit();
-        adaptador.notifyDataSetChanged();
+        func.saveLista(lista_canales,"listaFavoritos");
         if(lista_canales.isEmpty()){
-            Snackbar
-                    .make(getActivity().findViewById(android.R.id.content), "Lista de favoritos vacia :c",Snackbar.LENGTH_LONG)
-                    .show();
+            Toast.makeText(getContext(), "Lista de favoritos vacia :c", Toast.LENGTH_SHORT).show();
         }
     }
 

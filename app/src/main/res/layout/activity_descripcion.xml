@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/desc"
-    android:background="#575656"
+    android:background="@drawable/gradiant2"
     android:orientation="vertical"
     android:weightSum="10"
     tools:context=".Descripcion">
@@ -25,10 +25,13 @@
 
             <ImageView
                 android:id="@+id/imagenPe"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="300dp"
+                android:minWidth="200dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
                 tools:srcCompat="@drawable/altv" />
 
             <LinearLayout
@@ -56,7 +59,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_below="@+id/imagenPe"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="29dp"
                 android:layout_marginEnd="16dp"
                 android:layout_toStartOf="@+id/playBoton"
                 android:background="@drawable/img2"
@@ -68,22 +71,35 @@
                 android:layout_height="60dp"
                 android:layout_below="@+id/imagenPe"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="15dp"
+                android:layout_marginTop="29dp"
+                android:layout_marginEnd="11dp"
                 android:background="@drawable/img2"
                 app:srcCompat="@drawable/ic_play_arrow_black_24dp" />
 
             <TextView
                 android:id="@+id/txtCalif"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imagenPe"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="34dp"
-                android:layout_marginTop="23dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="100dp"
+                android:gravity="center"
                 android:text="TextView"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/trailer"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_below="@+id/imagenPe"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="61dp"
+                android:layout_marginTop="29dp"
+                android:background="@drawable/img2"
+                android:text="Trailer"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/txtdes"
@@ -126,6 +142,8 @@
                 android:progressTint="#ff0600"
                 android:visibility="gone"
                 />
+
+
         </RelativeLayout>
 
 
